@@ -1,0 +1,26 @@
+
+{"studio": "Disney",
+    "all_acquisitions":[
+        {"name":"Miramax", "year":1993, "value":60000000},
+        {"name":"Capital Cities/ABC/ESPN", "year":1995, "value":19000000000},
+        {"name":"Starwave", "year":1998, "value":-1},
+        {"name":"Infoseek", "year":1999, "value":-1},
+        {"name":"Fox Family Worldwide (Freeform)", "year":2001, "value":2900000000},
+        {"name":"Baby Einstein", "year":2001, "value":-1},
+        {"name":"The Muppets (and Bear in the Big Blue House)", "year":2004, "value":75000000},
+        {"name":"Avalanche Software", "year":2005, "value":-1},
+        {"name":"Pixar", "year":2006, "value":7400000000},
+        {"name":"Oswald the Lucky Rabbit", "year":2006, "value":-1},
+        {"name":"Junction Point Studios", "year":2007, "value":-1},
+        {"name":"Marvel", "year":2009, "value":4000000000},
+        {"name":"30% of Hulu", "year":2009, "value":-1},
+        {"name":"Wideload Games", "year":2010, "value":-1},
+        {"name":"Tapulous", "year":2010, "value":-1},
+        {"name":"Playdom", "year":2010, "value":563000000},
+        {"name":"UTV Software Communications", "year":2011, "value":297000000},
+        {"name":"Lucasfilm (Star Wars)", "year":2012, "value":4060000000},
+        {"name":"Maker Studios", "year":2014, "value":500000000},
+        {"name":"BAM", "year":2016, "value":2580000000},
+        {"name":"21st Century Fox", "year":2019, "value":71300000000}
+    ]
+}
