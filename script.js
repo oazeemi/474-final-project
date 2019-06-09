@@ -38,10 +38,8 @@ class Blob {
     ctx.moveTo((p0.x + p1.x) / 2, (p0.y + p1.y) / 2);
 
     for (let i = 1; i < points; i++) {
-      pointsArray[i].solveWith(
-        pointsArray[i - 1],
-        pointsArray[i + 1] || pointsArray[0]
-      );
+
+      pointsArray[i].solveWith(pointsArray[i - 1], pointsArray[i + 1] || pointsArray[0]);
 
       let p2 = pointsArray[i].position;
       var xc = (p1.x + p2.x) / 2;
@@ -63,16 +61,16 @@ class Blob {
     // ctx.closePath();
     ctx.fillStyle = this.color;
     ctx.fill();
-    ctx.strokeStyle = "#000000";
+    ctx.strokeStyle = "#40204c";
     // ctx.stroke();
 
     /*
-    ctx.fillStyle = '#000000';
-    if(this.mousePos) {
-      let angle = Math.atan2(this.mousePos.y, this.mousePos.x) + Math.PI;
-      ctx.fillRect(center.x + Math.cos(angle) * this.radius, center.y + Math.sin(angle) * this.radius, 5, 5);
-    }
-*/
+        ctx.fillStyle = '#000000';
+        if(this.mousePos) {
+          let angle = Math.atan2(this.mousePos.y, this.mousePos.x) + Math.PI;
+          ctx.fillRect(center.x + Math.cos(angle) * this.radius, center.y + Math.sin(angle) * this.radius, 5, 5);
+        }
+    */
     requestAnimationFrame(this.render.bind(this));
   }
 
@@ -90,12 +88,9 @@ class Blob {
   }
 
   set canvas(value) {
-    if (
-      value instanceof HTMLElement &&
-      value.tagName.toLowerCase() === "canvas"
-    ) {
+    if (value instanceof HTMLElement && value.tagName.toLowerCase() === 'canvas') {
       this._canvas = canvas;
-      this.ctx = this._canvas.getContext("2d");
+      this.ctx = this._canvas.getContext('2d');
     }
   }
   get canvas() {
@@ -121,16 +116,19 @@ class Blob {
   }
 
   set position(value) {
-    if (typeof value == "object" && value.x && value.y) {
+    if (typeof value == 'object' && value.x && value.y) {
       this._position = value;
     }
   }
   get position() {
-    return this._position || { x: 0.5, y: 0.5 };
+    return this._position || {
+      x: 0.5,
+      y: 0.5
+    };
   }
 
   get divisional() {
-    return (Math.PI * 2) / this.numPoints;
+    return Math.PI * 2 / this.numPoints;
   }
 
   get center() {
@@ -161,16 +159,11 @@ class Point {
   }
 
   solveWith(leftPoint, rightPoint) {
-    this.acceleration =
-      (-0.3 * this.radialEffect +
-        (leftPoint.radialEffect - this.radialEffect) +
-        (rightPoint.radialEffect - this.radialEffect)) *
-        this.elasticity -
-      this.speed * this.friction;
+    this.acceleration = (-0.3 * this.radialEffect + (leftPoint.radialEffect - this.radialEffect) + (rightPoint.radialEffect - this.radialEffect)) * this.elasticity - this.speed * this.friction;
   }
 
   set acceleration(value) {
-    if (typeof value == "number") {
+    if (typeof value == 'number') {
       this._acceleration = value;
       this.speed += this._acceleration * 2;
     }
@@ -180,7 +173,7 @@ class Point {
   }
 
   set speed(value) {
-    if (typeof value == "number") {
+    if (typeof value == 'number') {
       this._speed = value;
       this.radialEffect += this._speed * 5;
     }
@@ -190,7 +183,7 @@ class Point {
   }
 
   set radialEffect(value) {
-    if (typeof value == "number") {
+    if (typeof value == 'number') {
       this._radialEffect = value;
     }
   }
@@ -200,13 +193,9 @@ class Point {
 
   get position() {
     return {
-      x:
-        this.parent.center.x +
-        this.components.x * (this.parent.radius + this.radialEffect),
-      y:
-        this.parent.center.y +
-        this.components.y * (this.parent.radius + this.radialEffect)
-    };
+      x: this.parent.center.x + this.components.x * (this.parent.radius + this.radialEffect),
+      y: this.parent.center.y + this.components.y * (this.parent.radius + this.radialEffect)
+    }
   }
 
   get components() {
@@ -214,7 +203,7 @@ class Point {
   }
 
   set elasticity(value) {
-    if (typeof value === "number") {
+    if (typeof value === 'number') {
       this._elasticity = value;
     }
   }
@@ -222,7 +211,7 @@ class Point {
     return this._elasticity || 0.001;
   }
   set friction(value) {
-    if (typeof value === "number") {
+    if (typeof value === 'number') {
       this._friction = value;
     }
   }
@@ -231,53 +220,71 @@ class Point {
   }
 }
 
-blob = new Blob();
+blob = new Blob;
 
-init = function() {
-  canvas = document.createElement("canvas");
-  canvas.setAttribute("touch-action", "none");
+init = function () {
+  canvas = document.createElement('canvas');
+  canvas.setAttribute('touch-action', 'none');
 
   document.body.appendChild(canvas);
 
-  let resize = function() {
+  let resize = function () {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-  };
-  window.addEventListener("resize", resize);
+  }
+  window.addEventListener('resize', resize);
   resize();
 
-  let oldMousePoint = { x: 0, y: 0 };
+  let oldMousePoint = {
+    x: 0,
+    y: 0
+  };
   let hover = false;
-  let mouseMove = function(e) {
+  let mouseMove = function (e) {
+
     let pos = blob.center;
-    let diff = { x: e.clientX - pos.x, y: e.clientY - pos.y };
-    let dist = Math.sqrt(diff.x * diff.x + diff.y * diff.y);
+    let diff = {
+      x: e.clientX - pos.x,
+      y: e.clientY - pos.y
+    };
+    let dist = Math.sqrt((diff.x * diff.x) + (diff.y * diff.y));
     let angle = null;
 
-    blob.mousePos = { x: pos.x - e.clientX, y: pos.y - e.clientY };
+    blob.mousePos = {
+      x: pos.x - e.clientX,
+      y: pos.y - e.clientY
+    };
 
     if (dist < blob.radius && hover === false) {
-      let vector = { x: e.clientX - pos.x, y: e.clientY - pos.y };
+      let vector = {
+        x: e.clientX - pos.x,
+        y: e.clientY - pos.y
+      };
       angle = Math.atan2(vector.y, vector.x);
       hover = true;
       // blob.color = '#77FF00';
     } else if (dist > blob.radius && hover === true) {
-      let vector = { x: e.clientX - pos.x, y: e.clientY - pos.y };
+      let vector = {
+        x: e.clientX - pos.x,
+        y: e.clientY - pos.y
+      };
       angle = Math.atan2(vector.y, vector.x);
       hover = false;
-      blob.color = null;
+      blob.color = "#40204c";
     }
 
-    if (typeof angle == "number") {
+    if (typeof angle == 'number') {
+
       let nearestPoint = null;
       let distanceFromPoint = 100;
 
-      blob.points.forEach(point => {
+      blob.points.forEach((point) => {
         if (Math.abs(angle - point.azimuth) < distanceFromPoint) {
           // console.log(point.azimuth, angle, distanceFromPoint);
           nearestPoint = point;
           distanceFromPoint = Math.abs(angle - point.azimuth);
         }
+
       });
 
       if (nearestPoint) {
@@ -285,22 +292,21 @@ init = function() {
           x: oldMousePoint.x - e.clientX,
           y: oldMousePoint.y - e.clientY
         };
-        strength =
-          Math.sqrt(strength.x * strength.x + strength.y * strength.y) * 10;
+        strength = Math.sqrt((strength.x * strength.x) + (strength.y * strength.y)) * 10;
         if (strength > 100) strength = 100;
-        nearestPoint.acceleration = (strength / 100) * (hover ? -1 : 1);
+        nearestPoint.acceleration = strength / 100 * (hover ? -1 : 1);
       }
     }
 
     oldMousePoint.x = e.clientX;
     oldMousePoint.y = e.clientY;
-  };
+  }
   // window.addEventListener('mousemove', mouseMove);
-  window.addEventListener("pointermove", mouseMove);
+  window.addEventListener('pointermove', mouseMove);
 
   blob.canvas = canvas;
   blob.init();
   blob.render();
-};
+}
 
 init();
