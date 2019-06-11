@@ -15,40 +15,35 @@
   </head>
 
   <body>
+    <script src="script.js"></script>
+
     <div id="cbp-fbscroller" class="cbp-fbscroller">
       <nav>
         <a href="#fbsection1" class="cbp-fbcurrent">Section 1</a>
         <a href="#fbsection2" onclick="start()">Section 2</a>
-        <a href="#fbsection3" onclick="test()">Section 3</a>
-        <a href="#fbsection4">Section 4</a>
-        <a href="#fbsection5">Section 5</a>
+        <a
+          href="#fbsection3"
+          onclick="begin([4, 11, 13, 9], ['yellow', 'blue', 'brown', 'white'], ['#year19901', '#year19902', '#year19903', '#year19904'], 4);
+        "
+          >Section 3</a
+        >
+        <a
+          href="#fbsection4"
+          onclick="begin([8, 11, 8, 18, 8], ['yellow', 'blue', 'brown', 'white', 'red'], ['#film1', '#film2', '#film3', '#film4', '#film5'], 5)"
+          >Section 4</a
+        >
+        <a
+          href="#fbsection5"
+          onclick="begin([6, 7, 3], ['yellow', 'blue', 'brown'], ['#car1', '#car2', '#car3'], 3)"
+          >Section 5</a
+        >
+        <a href="#fbsection6">Section 6</a>
+        <a href="#fbsection7">Section 7</a>
       </nav>
 
       <section id="fbsection1">
-        <div class="container4">
+        <div class="center">
           <h1>Oligipolies</h1>
-        </div>
-
-        <div id="bottom" style="text-align:center;">
-          <svg
-            class="mouse"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 76 130"
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <g fill="none" fill-rule="evenodd">
-              <rect
-                width="70"
-                height="118"
-                x="1.5"
-                y="1.5"
-                stroke="#FFF"
-                stroke-width="3"
-                rx="36"
-              />
-              <circle class="scroll" cx="36.5" cy="31.5" r="4.5" fill="#FFF" />
-            </g>
-          </svg>
         </div>
       </section>
 
@@ -62,27 +57,103 @@
       </section>
 
       <section id="fbsection3">
-        <h1>Works3</h1>
+        <h1 id="smaller">The Banking Industry</h1>
+        <div class="partition" id="year19901"><h3>Citigroup</h3></div>
+        <div class="partition" id="year19902">
+          <h3>JPMorgan Chase</h3>
+        </div>
+        <div class="partition" id="year19903">
+          <h3>Bank of America</h3>
+        </div>
+        <div class="partition" id="year19904">
+          <h3>Wells Fargo</h3>
+        </div>
+        <p id="description">
+          From the years 1990 to 2009, Citigroup acquired 4 companies; JPMorgan
+          acquired 11 companies; Bank of America acquired 13 companies; And
+          Wells Fargo acquired 9 companies.
+        </p>
       </section>
+
       <section id="fbsection4">
-        <h1>Works4</h1>
+        <h1 id="smaller">The Film Industry</h1>
+        <div class="partition" id="film1"><h3>NBCUniversal</h3></div>
+        <div class="partition" id="film2">
+          <h3>Viacom</h3>
+        </div>
+        <div class="partition" id="film3">
+          <h3>Warner Media</h3>
+        </div>
+        <div class="partition" id="film4">
+          <h3>WaltDisney Studios</h3>
+        </div>
+        <div class="partition" id="film5">
+          <h3>Sony Pictures</h3>
+        </div>
+        <p id="description">
+          From the years 1912 to 2019, NBCUniversal acquired 8 companies; Viacom
+          acquired 11 companies; Warner Media acquired 8 companies; WaltDisney
+          Studios acquired 18 companies; Sony Pictures acquired 8 companies.
+        </p>
       </section>
+
       <section id="fbsection5">
-        <h1>Works5</h1>
+        <h1 id="smaller">The Automobile Industry</h1>
+        <div class="partition" id="car1"><h3>General Motors</h3></div>
+        <div class="partition" id="car2">
+          <h3>Fiat Chrysler</h3>
+        </div>
+        <div class="partition" id="car3">
+          <h3>Ford Motors</h3>
+        </div>
+        <p id="description">
+          From the years 1950 to 2019, General Motors acquired 6 companies; Fiat
+          Chrysler acquired 7 companies; Ford Motors acquired 3 companies;
+        </p>
+      </section>
+
+      <section id="fbsection6">
+        <h1 class="center" style="font-size:30px;">
+          Oligopolies&nbsp;
+          <span
+            class="txt-rotate"
+            data-period="1000"
+            data-rotate='[ "invest in R&D.", "bring price stability.",  "reduces customer choice.", "are involved in collusion.", "create barriers to entry"]'
+          ></span>
+        </h1>
+        <h2></h2>
+      </section>
+
+      <section id="fbsection7">
+        <div class="body">
+          <div class="flex light">
+            <a href="#0" class="bttn">Are Oligopolies Good</a>
+          </div>
+          <div class="flex dark">
+            <a href="#0" class="bttn-dark">Are Oligopolies Bad</a>
+          </div>
+        </div>
       </section>
     </div>
 
     <script>
-      function test() {
+      function begin(amount, color, locations, count) {
+        for (var i = 0; i < count; ++i) {
+          test(amount[i], color[i], locations[i]);
+        }
+      }
+
+      function test(amount, color, location) {
+        var divWidth = d3.select(".partition").node();
         var margin = { top: 50, right: 50, bottom: 50, left: 50 };
-        var width = window.innerWidth,
-          height = window.innerHeight;
+        var width = divWidth.getBoundingClientRect().width;
+        var height = divWidth.getBoundingClientRect().height;
 
         var svg = d3
-          .select("#fbsection3")
+          .select(location)
           .append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
+          .attr("width", width)
+          .attr("height", height)
           .append("g")
           .attr("transform", "translate(" + [margin.left, margin.top] + ")");
 
@@ -115,10 +186,10 @@
           .attr("in2", "gooey")
           .attr("operator", "atop");
 
-        var data = d3.range(60).map(function(i) {
+        var data = d3.range(amount).map(function(i) {
           return {
             r: config.radius,
-            colour: "white"
+            colour: color
           };
         });
 
@@ -162,7 +233,7 @@
           .attr("cx", width / 2)
           .attr("cy", height / 2)
           .attr("r", 0)
-          .style("fill", "white");
+          .style("fill", color);
 
         function clusterDots() {
           // Interpolate between gooey filter and no gooey filter
@@ -218,11 +289,9 @@
 
         function loop() {
           setTimeout(clusterDots, 1000);
-          setTimeout(separateDots, data.length * 150);
         }
 
         loop();
-        setInterval(loop, data.length * 200);
 
         function transitionGoo(duration) {
           d3.selectAll(".blurValues")
@@ -257,11 +326,8 @@
             Math.pow(point[0] - d.x, 2) + Math.pow(point[1] - d.y, 2)
           );
         }
-
-        d3.select("body").attr("align", "center");
       }
     </script>
-    <script src="script.js"></script>
     <script src="animation.js"></script>
   </body>
 </html>
